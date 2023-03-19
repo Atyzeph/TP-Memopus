@@ -23,12 +23,7 @@ function App() {
       async function () {
 
         const terms_api = await getTerms();
-        console.log('terms ', terms_api);
-
         const cards_api = await getCards();
-        console.log('cards ', cards_api);
-        // const cardsDelete_api = await deleteCard();
-        // console.log('cards ', cardsDelete_api);
 
         setTerms(terms_api)
         setCards(cards_api)
@@ -37,7 +32,6 @@ function App() {
   }, []);
 
   const handleClickTerm = (e, tid) => {
-    console.log('dans le handleClickTerm', tid);
     setShowAddCardForm(true);
     setClickedTerm(tid);
   }
@@ -56,9 +50,6 @@ function App() {
 
   const handleSubmitAddCard = (e, idTerm) => {
     e.preventDefault();
-    console.log(inputQuestion.current.value);
-    console.log(inputAnswer.current.value);
-    console.log(`Dans handleSubmitAddCard, term : ` + idTerm);
     // Création d'une card
     const new_card = {
       id: Math.random() * 1000,
@@ -108,12 +99,10 @@ function App() {
     console.log(updatedCard);
     updateStateCard(updatedCard);
     updateCard(updatedCard);
-    // Masquer le formulaire
+    // false = masquer le formulaire
     showUpdateCardForm(false);
   };
 
-
-// OK
   return (
     <div className="App container">
       <header>
@@ -122,9 +111,11 @@ function App() {
       {terms.map(term => {
         return <Term onClickTerm={handleClickTerm} key={term.title} title={term.title} id={term.id} />
       })}
+      {/* Formulaire d'ajout de card */}
       {showAddCardForm && (
         <FormCard inputAnswer={inputAnswer} inputQuestion={inputQuestion} onSubmitAddCard={(e) => handleSubmitAddCard(e, clicked_term)} />
       )}
+      {/* cid = columnId, identifie la colonne pour une card donnée */}
       <div className="row">
       <div className="col-3">
         <h2 className="text-center">A apprendre</h2>
@@ -140,6 +131,7 @@ function App() {
           .map((card) => {
             if (cardToUpdate !== null && cardToUpdate.id === card.id) {
               return (
+                // Formulair de MàJ de card
                 <div key={card.id}>
                   <CardUpdateForm card={cardToUpdate} onUpdate={(updatedCard) => updateStateCard(updatedCard, setCards)} />
                 </div>
@@ -192,72 +184,72 @@ function App() {
             }
           })}
       </div>
-      <div className="col-3">
-        <h2 className="text-center">Je sais bien</h2>
-        {cards
-          .filter((card) => {
-            if (card.tid !== undefined || null) {
-              return card.tid === parseInt(clicked_term);
-            } else {
-              return false;
-            }
-          })
-          .filter((card) => card.cid === 3)
-          .map((card) => {
-            if (cardToUpdate !== null && cardToUpdate.id === card.id) {
-              return (
-                <div key={card.id}>
-                  <CardUpdateForm card={cardToUpdate} onUpdate={(updatedCard) => updateStateCard(updatedCard, setCards)} />
-                </div>
-              );
-            } else {
-              return (
-                <div className='mb-2'>
-                  <Card
-                    onClickCard={(e) => handleClickDeleteCard(e, card.id)}
-                    onUpdateClick={(e) => handleClickUpdate(e, card.id)}
-                    key={card.id}
-                    question={card.question}
-                    answer={card.answer}
-                  />
-                </div>
-              );
-            }
-          })}
-      </div>
-      <div className="col-3">
-        <h2 className="text-center">Je sais parfaitement</h2>
-        {cards
-          .filter((card) => {
-            if (card.tid !== undefined || null) {
-              return card.tid === parseInt(clicked_term);
-            } else {
-              return false;
-            }
-          })
-          .filter((card) => card.cid === 4)
-          .map((card) => {
-            if (cardToUpdate !== null && cardToUpdate.id === card.id) {
-              return (
-                <div key={card.id}>
-                  <CardUpdateForm card={cardToUpdate} onUpdate={(updatedCard) => updateStateCard(updatedCard, setCards)} />
-                </div>
-              );
-            } else {
-              return (
-                <div className='mb-2'>
-                  <Card
-                    onClickCard={(e) => handleClickDeleteCard(e, card.id)}
-                    onUpdateClick={(e) => handleClickUpdate(e, card.id)}
-                    key={card.id}
-                    question={card.question}
-                    answer={card.answer}
-                  />
-                </div>
-              );
-            }
-          })}
-      </div>
+        <div className="col-3">
+          <h2 className="text-center">Je sais bien</h2>
+          {cards
+            .filter((card) => {
+              if (card.tid !== undefined || null) {
+                return card.tid === parseInt(clicked_term);
+              } else {
+                return false;
+              }
+            })
+            .filter((card) => card.cid === 3)
+            .map((card) => {
+              if (cardToUpdate !== null && cardToUpdate.id === card.id) {
+                return (
+                  <div key={card.id}>
+                    <CardUpdateForm card={cardToUpdate} onUpdate={(updatedCard) => updateStateCard(updatedCard, setCards)} />
+                  </div>
+                );
+              } else {
+                return (
+                  <div className='mb-2'>
+                    <Card
+                      onClickCard={(e) => handleClickDeleteCard(e, card.id)}
+                      onUpdateClick={(e) => handleClickUpdate(e, card.id)}
+                      key={card.id}
+                      question={card.question}
+                      answer={card.answer}
+                    />
+                  </div>
+                );
+              }
+            })}
+        </div>
+        <div className="col-3">
+          <h2 className="text-center">Je sais parfaitement</h2>
+          {cards
+            .filter((card) => {
+              if (card.tid !== undefined || null) {
+                return card.tid === parseInt(clicked_term);
+              } else {
+                return false;
+              }
+            })
+            .filter((card) => card.cid === 4)
+            .map((card) => {
+              if (cardToUpdate !== null && cardToUpdate.id === card.id) {
+                return (
+                  <div key={card.id}>
+                    <CardUpdateForm card={cardToUpdate} onUpdate={(updatedCard) => updateStateCard(updatedCard, setCards)} />
+                  </div>
+                );
+              } else {
+                return (
+                  <div className='mb-2'>
+                    <Card
+                      onClickCard={(e) => handleClickDeleteCard(e, card.id)}
+                      onUpdateClick={(e) => handleClickUpdate(e, card.id)}
+                      key={card.id}
+                      question={card.question}
+                      answer={card.answer}
+                    />
+                  </div>
+                );
+              }
+            })}
+        </div>
       </div>
     </div>
   );
