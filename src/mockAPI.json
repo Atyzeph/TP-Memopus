@@ -1,0 +1,45 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "username": "test",
+      "password": "test"
+    }
+  ],
+  "terms": [
+    {
+      "id": 1,
+      "title": "Webpack"
+    },
+    {
+      "id": 2,
+      "title": "Javascript"
+    },
+    {
+      "id": 3,
+      "title": "css"
+    }
+  ],
+  "cards": [
+    {
+      "question": "Inventeur du web",
+      "answer": "",
+      "tid": 1,
+      "cid": 1,
+      "id": 1
+    },
+    {
+      "question": "Inventeur du js",
+      "answer": "Brendan Eich",
+      "tid": 2,
+      "cid": 2,
+      "id": 2
+    },
+    {
+      "question": "Inventeur du css",
+      "tid": 1,
+      "cid": 3,
+      "id": 3
+    }
+  ]
+}
